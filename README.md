@@ -15,7 +15,7 @@
 
 ## Description
 
-With this applications you can of your employees. It's simple design makes it easy to use. I learned how to use a database using the command line as well as how to  query said database. I used MySQL, Node, 
+With this applications you can of your employees. It's simple design makes it easy to use. I learned how to use a database using the command line as well as how to  query said database. I used MySQL, Node, inquirer and mysql2.
 
 User Story
 
@@ -45,7 +45,6 @@ Acceptance Criteria
 
 ## Dependencies
 
-- "express": "^4.18.2",
 - "inquirer": "^8.2.4",
 - "mysql2": "^3.8.0"
 - "nodemon": "^3.0.3"
@@ -57,9 +56,9 @@ There is some installation required for the first opening. At your command promp
 
 - npm init --y
 - npm install
-- npm i express
 - npm install --save-dev nodemon
 - npm i inquirer@8.2.4
+- npm i mysql2
 
 
 ## Usage
