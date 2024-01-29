@@ -15,7 +15,7 @@
 
 ## Description
 
-With this applications you can of your employees. It's simple design makes it easy to use.
+With this applications you can of your employees. It's simple design makes it easy to use. I learned how to use a database using the command line as well as how to  query said database. I used MySQL, Node, 
 
 User Story
 
@@ -59,10 +59,12 @@ There is some installation required for the first opening. At your command promp
 - npm install
 - npm i express
 - npm install --save-dev nodemon
+- npm i inquirer@8.2.4
+
 
 ## Usage
 
--
+The purpose of this application is to keep track of employees of their roles, departements and id numbers as well as update current or new employee. This is used with the command line.
 
 ## Credits
 
