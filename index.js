@@ -1,4 +1,5 @@
 const mysql = require('mysql2');
+const inquirer = require('./routes/route.js')
 
 const db = mysql.createConnection(
     {
@@ -9,27 +10,15 @@ const db = mysql.createConnection(
       password: '12345678',
       database: 'employees_db'
     },
-    console.log(`Connected to the employees_db database.`)
+    console.log(`Connected to the employees_db database.`),
+    
   );
+console.log(inquirer)
 
-function addDepart() {
-    const sql = `INSERT INTO department (dept_name) VALUE (?)`;
-    const userdata = "hr";
-  
-  db.query(sql, userdata, (err, rows) => {
-    console.log("Success!");
-  });
+function viewEmploy() {
+  const sql = `SELECT * FROM employees`;
+
+db.query(sql, (err, rows) => {
+  console.table(rows);
+});
 }
-
-
-  function viewDepart() {
-    const sql = `SELECT * FROM department`;
-  
-  db.query(sql, (err, rows) => {
-    console.table(rows);
-  });
-  }
-
-
-//addDepart()
-//viewDepart()
