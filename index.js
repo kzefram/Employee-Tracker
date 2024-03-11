@@ -83,35 +83,75 @@ const db = mysql.createConnection(
 
 function viewEmploy() {
   const sql = `SELECT * FROM employees`;
+ 
+  return new Promise((resolve, reject) => {
+    db.query(sql, (err, rows) => {
+      console.table(rows);
+  })
+  })
 
-db.query(sql, (err, rows) => {
-  console.table(rows);
-});
+  .then(answers => {
+    if (answers.action === 'Return to main menu') {
+      menu();
+    } else {
+      process.exit();
+    }
+  });
+    //return restart();
 }
+
 
 function viewDepart() {
   const sql = `SELECT * FROM department`;
 
-db.query(sql, (err, rows) => {
-  console.table(rows);
-});
+  return new Promise((resolve, reject) => {
+    db.query(sql, (err, rows) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.table(rows);
+        resolve();
+      }
+    });
+  })
+  .then(() => nextAction())
+  .catch(err => console.error(err));
 }
 
 function viewRoles() {
   const sql = `SELECT * FROM roles`;
 
-db.query(sql, (err, rows) => {
-  console.table(rows);
-});
+  return new Promise((resolve, reject) => {
+    db.query(sql, (err, rows) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.table(rows);
+        resolve();
+      }
+    });
+  })
+  .then(() => nextAction())
+  .catch(err => console.error(err));
 }
 
 function viewEmploy() {
   const sql = `SELECT * FROM employees`;
 
-db.query(sql, (err, rows) => {
-  console.table(rows);
-});
+  return new Promise((resolve, reject) => {
+    db.query(sql, (err, rows) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.table(rows);
+        resolve();
+      }
+    });
+  })
+  .then(() => nextAction())
+  .catch(err => console.error(err));
 }
+
 
 function addDepart() {
   const sql = `INSERT INTO department (dept_name) VALUE (?)`;
@@ -132,7 +172,9 @@ function addDepart() {
         console.log("Success!");
       }
     });
-  });
+  })
+  .then(() => nextAction())
+  .catch(err => console.error(err));
 }
 
 function addRoles() {
@@ -163,7 +205,9 @@ function addRoles() {
         console.log("Success!");
       }
     });
-  });
+  })
+  .then(() => nextAction())
+  .catch(err => console.error(err));
 }
 
 function addEmploy() {
@@ -197,5 +241,189 @@ function addEmploy() {
         console.log("Success!");
       }
     });
+  })
+  .then(() => nextAction())
+  .catch(err => console.error(err));
+}
+
+function updateEmploy() {
+  const sql = `UPDATE employees SET role_id = ? WHERE id = ?`;
+
+  inquirer.prompt([
+    {
+      name: 'role_id',
+      message: 'What is the new role id?'
+    },
+    {
+      name: 'id',
+      message: 'What is the employee id?'
+    }
+  ])
+  .then(answers => {
+    const userdata = [answers.role_id, answers.id];
+
+    db.query(sql, userdata, (err, rows) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("Success!");
+      }
+    });
+  })
+  .then(() => nextAction())
+  .catch(err => console.error(err));
+}
+
+function updateRoles() {
+  const sql = `UPDATE roles SET title = ?, salary = ?, department_id = ? WHERE id = ?`;
+
+  inquirer.prompt([
+    {
+      name: 'title',
+      message: 'What is the new title?'
+    },
+    {
+      name: 'salary',
+      message: 'What is the new salary?'
+    },
+    {
+      name: 'department_id',
+      message: 'What is the new department id?'
+    },
+    {
+      name: 'id',
+      message: 'What is the role id?'
+    }
+  ])
+  .then(answers => {
+    const userdata = [answers.title, answers.salary, answers.department_id, answers.id];
+
+    db.query(sql, userdata, (err, rows) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("Success!");
+      }
+    });
+  })
+  .then(() => nextAction())
+  .catch(err => console.error(err));
+}
+
+function updateDepart() {
+  const sql = `UPDATE department SET dept_name = ? WHERE id = ?`;
+
+  inquirer.prompt([
+    {
+      name: 'dept_name',
+      message: 'What is the new department name?'
+    },
+    {
+      name: 'id',
+      message: 'What is the department id?'
+    }
+  ])
+  .then(answers => {
+    const userdata = [answers.dept_name, answers.id];
+
+    db.query(sql, userdata, (err, rows) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("Success!");
+      }
+    });
+  })
+  .then(() => nextAction())
+  .catch(err => console.error(err));
+}
+
+function deleteDepart() {
+  const sql = `DELETE FROM department WHERE id = ?`;
+
+  inquirer.prompt([
+    {
+      name: 'id',
+      message: 'What is the department id?'
+    }
+  ])
+  .then(answers => {
+    const userdata = [answers.id];
+
+    db.query(sql, userdata, (err, rows) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("Success!");
+      }
+    });
+  })
+  .then(() => nextAction())
+  .catch(err => console.error(err));
+}
+
+function deleteRoles() {
+  const sql = `DELETE FROM roles WHERE id = ?`;
+
+  inquirer.prompt([
+    {
+      name: 'id',
+      message: 'What is the role id?'
+    }
+  ])
+  .then(answers => {
+    const userdata = [answers.id];
+
+    db.query(sql, userdata, (err, rows) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("Success!");
+      }
+    });
+  })
+  .then(() => nextAction())
+  .catch(err => console.error(err));
+}
+
+function deleteEmploy() {
+  const sql = `DELETE FROM employees WHERE id = ?`;
+
+  inquirer.prompt([
+    {
+      name: 'id',
+      message: 'What is the employee id?'
+    }
+  ])
+  .then(answers => {
+    const userdata = [answers.id];
+
+    db.query(sql, userdata, (err, rows) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("Success!");
+      }
+    });
+  })
+  .then(() => nextAction())
+  .catch(err => console.error(err));  
+}
+
+function nextAction() {
+  return inquirer.prompt([
+    {
+      type: 'list',
+      message: 'What would you like to do next?',
+      name: 'nextAction',
+      choices: ['Return to main menu', 'Exit']
+    }
+  ])
+  .then(answers => {
+    if (answers.nextAction === 'Return to main menu') {
+      menu();
+    } else {
+      process.exit();
+    }
   });
 }
